@@ -35,25 +35,17 @@ func parseInput(filename string) ([]id_range, error) {
 	return result, nil
 }
 
-func isValidId(id int) bool {
+func isValidIdPt1(id int) bool {
 	s_id := strconv.Itoa(id)
-	if len(s_id)%2 != 0 {
-		return true
-	}
-
-	for idx := 1; idx <= len(s_id)/2; idx++ {
-		if s_id[idx-1] != s_id[len(s_id)/2+idx-1] {
-			return true
-		}
-	}
-	return false
+	half_len := len(s_id) / 2
+	return s_id[:half_len] != s_id[half_len:]
 }
 
 func part1(input []id_range) int {
 	result := 0
 	for _, id_range := range input {
 		for id := id_range.min; id <= id_range.max; id++ {
-			if !isValidId(id) {
+			if !isValidIdPt1(id) {
 				result += id
 			}
 		}

@@ -17,7 +17,7 @@ func TestIsValidId(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := isValidId(tt.id)
+			got := isValidIdPt1(tt.id)
 			if got != tt.want {
 				t.Errorf("isValidId(%d) = %v; want %v", tt.id, got, tt.want)
 			}
