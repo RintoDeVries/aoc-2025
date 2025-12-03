@@ -53,10 +53,55 @@ func part1(input []id_range) int {
 	return result
 }
 
+func notAllEqualParts(id int, parts int) bool {
+	s := strconv.Itoa(id)
+	length := len(s)
+	chunk := length / parts
+
+	slices := make([]string, 0, parts)
+	for i := 0; i < parts; i++ {
+		start := i * chunk
+		end := start + chunk
+
+		if i == parts-1 {
+			end = length
+		}
+
+		slices = append(slices, s[start:end])
+	}
+
+	for i := 1; i < len(slices); i++ {
+		if slices[i] != slices[0] {
+			return true
+		}
+	}
+	return false
+}
+
+func isValidIdPt2(id int) bool {
+	return notAllEqualParts(id, 2) && notAllEqualParts(id, 3) && notAllEqualParts(id, 5) && notAllEqualParts(id, 7)
+}
+
+func part2(input []id_range) int {
+	result := 0
+	for _, id_range := range input {
+		for id := id_range.min; id <= id_range.max; id++ {
+			if !isValidIdPt2(id) {
+				result += id
+			}
+		}
+	}
+	return result
+}
+
 func main() {
-	input, err := parseInput("input.txt")
+	parsedInput, err := parseInput("input.txt")
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(part1(input))
+
+	part1 := part1(parsedInput)
+	part2 := part2(parsedInput)
+	fmt.Println("The result for part 1:", part1)
+	fmt.Println("The result for part 2:", part2)
 }
