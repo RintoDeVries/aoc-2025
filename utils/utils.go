@@ -10,7 +10,7 @@ func FileToStringList(filepath string) ([]string, error) {
 
 	file, err := os.Open(filepath)
 	if err != nil {
-		return result, err
+		return nil, err
 	}
 	defer file.Close()
 
@@ -19,9 +19,5 @@ func FileToStringList(filepath string) ([]string, error) {
 		result = append(result, scanner.Text())
 	}
 
-	if err := scanner.Err(); err != nil {
-		return result, err
-	}
-
-	return result, nil
+	return result, scanner.Err()
 }
